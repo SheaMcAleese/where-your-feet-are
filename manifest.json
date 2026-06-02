@@ -2,7 +2,7 @@
   "name": "Where Your Feet Are",
   "short_name": "WYFA",
   "description": "A self-belief programme for athletes. ELV8 Performance.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0A0A0C",
   "theme_color": "#CC2222",
