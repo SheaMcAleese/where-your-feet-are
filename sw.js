@@ -1,4 +1,4 @@
-const CACHE = 'wyfa-v3';
+const CACHE = 'wyfa-v4';
 const ASSETS = [
   './', './index.html', './404.html',
   './css/app.css',
@@ -20,8 +20,26 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
+// Network-first for our own files (always get the latest deploy), with a
+// cache fallback so the app still works offline. Cross-origin requests
+// (e.g. Google Fonts) stay cache-first for speed.
 self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
-  );
+  const req = e.request;
+  if (req.method !== 'GET') return;
+
+  const sameOrigin = new URL(req.url).origin === self.location.origin;
+
+  if (sameOrigin) {
+    e.respondWith(
+      fetch(req)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(req, copy));
+          return res;
+        })
+        .catch(() => caches.match(req).then(c => c || caches.match('./index.html')))
+    );
+  } else {
+    e.respondWith(caches.match(req).then(cached => cached || fetch(req)));
+  }
 });
