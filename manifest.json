@@ -4,8 +4,8 @@
   "description": "A self-belief programme for athletes. ELV8 Performance.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0A0A0C",
-  "theme_color": "#CC2222",
+  "background_color": "#16140F",
+  "theme_color": "#16140F",
   "orientation": "portrait",
   "icons": [
     { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },

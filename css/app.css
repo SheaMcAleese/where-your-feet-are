@@ -1,18 +1,22 @@
 /* ── WYFA Design System ── */
 
 :root {
-  --bg: #0A0A0C;
-  --surface: #111114;
-  --card: #18181C;
-  --border: #252528;
-  --border-sub: #1C1C20;
-  --red: #CC2222;
-  --red-dim: rgba(204, 34, 34, 0.12);
-  --red-glow: rgba(204, 34, 34, 0.06);
-  --text: #EEECEA;
-  --text-2: #8A8A90;
-  --text-3: #55555A;
-  --text-4: #35353A;
+  /* ── ELV8 brand theming ── warm dark base + gold accent (matches brand.ts: bg #222222, gold #D4AF37) */
+  --bg: #16140F;          /* warm near-black (deck #15140F) */
+  --surface: #1D1B15;
+  --card: #24211A;        /* warm dark, ELV8 #222 family */
+  --border: #34302A;
+  --border-sub: #211E18;
+  --gold: #D4AF37;        /* ELV8 accent — key words, dividers, glows */
+  --gold-soft: #E2C45A;   /* lighter gold for hover/active */
+  --red: var(--gold);     /* legacy alias → gold (class/var names kept) */
+  --red-dim: rgba(212, 175, 55, 0.12);
+  --red-glow: rgba(212, 175, 55, 0.06);
+  --on-gold: #1A1710;     /* dark text on gold fills, for contrast */
+  --text: #F5F2EA;        /* warm white (deck cream #F7F5EF) */
+  --text-2: #A8A091;      /* warm grey */
+  --text-3: #6E675A;
+  --text-4: #423D34;
   --green: #22C55E;
   --green-dim: rgba(34, 197, 94, 0.12);
   --wa-green: #25D366;
@@ -201,11 +205,11 @@ button { touch-action: manipulation; cursor: pointer; }
   width: 100%;
   padding: 14px 24px;
   background: var(--red);
-  color: #fff;
+  color: var(--on-gold);
   border: none;
   border-radius: 30px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   min-height: 44px;
   touch-action: manipulation;
@@ -409,7 +413,7 @@ button { touch-action: manipulation; cursor: pointer; }
 
 .timeline-dot.current {
   background: var(--red);
-  color: #fff;
+  color: var(--on-gold);
 }
 
 .timeline-dot.future {
@@ -849,7 +853,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .bar.week0 { background: var(--text-4); color: var(--text-2); }
-.bar.week10 { background: var(--red); color: #fff; }
+.bar.week10 { background: var(--red); color: var(--on-gold); }
 
 /* ── Breathing Animation ── */
 .breath-circle {
@@ -942,7 +946,7 @@ input[type="range"]::-webkit-slider-thumb {
   body { background: #fff; color: #000; }
   .card { border: 1px solid #ccc; break-inside: avoid; }
   .bar.week0 { background: #999; }
-  .bar.week10 { background: #CC2222; }
+  .bar.week10 { background: #D4AF37; }
 }
 
 /* ── Unlock Pulse ── */

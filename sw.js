@@ -1,4 +1,4 @@
-const CACHE = 'wyfa-v2';
+const CACHE = 'wyfa-v3';
 const ASSETS = [
   './', './index.html', './404.html',
   './css/app.css',
