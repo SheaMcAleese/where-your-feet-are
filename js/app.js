@@ -125,8 +125,23 @@ function weekJournalCount(weekNum) {
   return D.journal.filter(j => j.week === weekNum).length;
 }
 
+// Coach "clean start" link: ?reset=1
+// Wipes this device so a new athlete begins at Day 1. It will NOT silently
+// destroy progress — if saved data exists, it asks first (Cancel keeps it).
+function maybeReset() {
+  const params = new URLSearchParams(location.search);
+  if (params.get('reset') !== '1') return;
+  // Strip the param so a later refresh can never re-trigger a wipe.
+  history.replaceState(null, '', location.pathname);
+  const hasData = !!localStorage.getItem('wyfa_v1');
+  if (!hasData || confirm('Start fresh on this device? This erases any saved progress here.\n\nTap Cancel to keep your existing progress.')) {
+    localStorage.removeItem('wyfa_v1');
+  }
+}
+
 // Boot
 function boot() {
+  maybeReset();
   load();
 
   if (!D.setupComplete) {
