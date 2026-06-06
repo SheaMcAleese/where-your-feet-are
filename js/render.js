@@ -42,7 +42,7 @@ function renderOnboardingStep(step) {
     el.innerHTML = `
       <h1>WHEN DOES IT START?</h1>
       <p class="body">Today is good. There\u2019s never a better day than the day you actually start.</p>
-      <input type="date" id="ob-date" value="${today()}">
+      <input type="date" id="ob-date" value="${today()}" min="${today()}">
       <button class="btn-red" onclick="onboardingDate()">This is Day 1</button>
     `;
   }
@@ -78,8 +78,11 @@ function onboardingName() {
 }
 
 function onboardingDate() {
-  const date = document.getElementById('ob-date').value;
+  let date = document.getElementById('ob-date').value;
   if (!date) return;
+  // A new athlete starts today at the earliest — never backdate into a
+  // later week (guards against a past date picked / a bypassed min attr).
+  if (date < today()) date = today();
   D.start = date;
   save();
   renderOnboardingStep(4);
