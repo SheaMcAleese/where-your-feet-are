@@ -1,5 +1,53 @@
 const COACH_WHATSAPP = '64274070070';
 
+// ── Supabase Progress Tracking ──
+const SUPA_URL = 'https://rqqjqoyjaiphsfhyyvka.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJxcWpxb3lqYWlwaHNmaHl5dmthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTEyMTksImV4cCI6MjA4OTQyNzIxOX0.kIZI3gNv3kfaWOsZhQ6k2B1Me4Q-zZMaaIcQTHD3Tuc';
+
+function getUid() {
+  let uid = localStorage.getItem('wyfa_uid');
+    if (!uid) {
+        uid = 'u_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+            localStorage.setItem('wyfa_uid', uid);
+              }
+                return uid;
+                }
+
+                function pushProgress() {
+                  if (!D.setupComplete || !D.name) return;
+                    const habits = Object.values(D.habits);
+                      const showUpDays = habits.filter(h => h.showUp).length;
+                        const journalDays = habits.filter(h => h.journal).length;
+                          const evidenceDays = habits.filter(h => h.evidence).length;
+                            const payload = {
+                                uid: getUid(),
+                                    name: D.name,
+                                        start_date: D.start || null,
+                                            day: getDay(),
+                                                week: getWeek(),
+                                                    phase: getPhase(),
+                                                        streak: D.streak || 0,
+                                                            last_open: D.lastOpen || null,
+                                                                days_active: habits.length,
+                                                                    show_up_days: showUpDays,
+                                                                        journal_days: journalDays,
+                                                                            evidence_days: evidenceDays,
+                                                                                milestones: D.milestones || [],
+                                                                                    updated_at: new Date().toISOString()
+                                                                                      };
+                                                                                        fetch(SUPA_URL + '/rest/v1/progress', {
+                                                                                            method: 'POST',
+                                                                                                headers: {
+                                                                                                      'apikey': SUPA_KEY,
+                                                                                                            'Authorization': 'Bearer ' + SUPA_KEY,
+                                                                                                                  'Content-Type': 'application/json',
+                                                                                                                        'Prefer': 'resolution=merge-duplicates'
+                                                                                                                            },
+                                                                                                                                body: JSON.stringify(payload)
+                                                                                                                                  }).catch(() => {});
+                                                                                                                                  }
+
+
 let D = {};
 
 function defaults() {
@@ -57,6 +105,7 @@ function esc(s) {
 
 function save() {
   localStorage.setItem('wyfa_v1', JSON.stringify(D));
+    pushProgress();
 }
 
 function load() {
@@ -150,6 +199,7 @@ function boot() {
   }
 
   tickStreak();
+    pushProgress();
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('streak-num').textContent = D.streak;
 
