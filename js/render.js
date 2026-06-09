@@ -24,7 +24,7 @@ function renderOnboardingStep(step) {
         <div class="phase-card"><div class="phase-weeks">Weeks 9\u201310</div><div class="phase-name">Stay Where Your Feet Are</div></div>
       </div>
       <button class="btn-red" onclick="renderOnboardingStep(2)">Start My 10 Weeks</button>
-      <p class="privacy-note">Your journal entries are stored on your device only. Habit stats and progress can be shared with your coach when you choose. Data can be deleted at any time.</p>
+          <p class="privacy-note">Your coach can see your progress (habits &amp; streaks) to support you. No journal content is ever shared.</p>
     `;
   }
 
